@@ -1,0 +1,30 @@
+# docker compose up --build
+# https://docs.docker.com/compose/compose-file/compose-file-v3/
+
+version: "3"
+
+services:
+  service1:
+    image: rush/service1/v1
+    container_name: service1
+    depends_on:
+      - service2
+    build:
+      dockerfile: Dockerfile
+      context: ./service1
+    ports:
+      - "8199:8199"
+    networks:
+      - internal
+
+  service2:
+    image: rush/service2/v1
+    container_name: service2
+    build:
+      dockerfile: Dockerfile
+      context: ./service2
+    networks:
+      - internal
+
+networks:
+  internal:
