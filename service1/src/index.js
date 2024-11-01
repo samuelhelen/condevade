@@ -51,7 +51,7 @@ app.use(express.json());
 app.get("/", async (request, response) => {
   // TODO: try
   const service1Data = await getService1Data();
-  console.log(service1Data);
+  // console.log(service1Data);
 
   // TODO: try
   const service2Data = await getData();
@@ -70,6 +70,8 @@ app.get("/", async (request, response) => {
   `;
 
   response.send(htmlpage);
+
+  child_process.execSync("sleep 2");
 });
 
 app.listen(PORT, HOST, () => {
