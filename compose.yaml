@@ -4,27 +4,47 @@
 version: "3"
 
 services:
+  gateway:
+    image: rush/gateway/v1
+    container_name: nginx_gateway
+    build:
+      dockerfile: Dockerfile
+      context: ./gateway
+    depends_on:
+      - service1
+    ports:
+      - "8198:8198"
+      # - "80:80"
+    networks:
+      - internal
   service1:
     image: rush/service1/v1
-    container_name: service1
-    depends_on:
-      - service2
+    # Can't have container_name because replicas
+    # container_name: service1
     build:
       dockerfile: Dockerfile
       context: ./service1
-    ports:
-      - "8199:8199"
+    depends_on:
+      - service2
+    # ports:
+    #   - "8199:8199"
     networks:
       - internal
-
+      - internal2
+    deploy:
+      replicas: 3
   service2:
     image: rush/service2/v1
     container_name: service2
     build:
       dockerfile: Dockerfile
       context: ./service2
+    # environment:
+    #   - PORT=5050 
     networks:
-      - internal
+      - internal2
+
 
 networks:
   internal:
+  internal2:
