@@ -2,50 +2,18 @@
 
 import http from "http";
 import express from "express";
-
-import axios from "axios";
-
-import { promisify } from "util";
 import child_process from "child_process";
-const exec = promisify(child_process.exec);
+import cors from "cors";
 
 import DataItem from "./DataItem.js";
 
-const PORT = 8199;
-const HOST = "0.0.0.0";
-// const HOST = "localhost";
+import { getService1Data, getService2Data } from "./service.js";
 
-// const BACKEND_URL = "http://localhost:8080";
-const BACKEND_URL = "http://service2:8080";
-
-const getData = async () => {
-  // TODO: try
-  const response = await axios.get(BACKEND_URL);
-  return response.data;
-};
-
-const getService1Data = async () => {
-  // TODO: try
-  const uptimeResult = await exec("uptime --pretty");
-  const uptime = uptimeResult.stdout;
-
-  // TODO: try
-  const dfResult = await exec("df");
-  const df = dfResult.stdout;
-
-  // TODO: try
-  const psAxResult = await exec("ps -ax");
-  const ps_ax = psAxResult.stdout;
-
-  // TODO: try
-  const ipAResult = await exec("ip a");
-  const ip_a = ipAResult.stdout;
-
-  return { uptime, df, ps_ax, ip_a };
-};
+import { HOST, PORT } from "./constants.js";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", async (request, response) => {
@@ -54,22 +22,24 @@ app.get("/", async (request, response) => {
   // console.log(service1Data);
 
   // TODO: try
-  const service2Data = await getData();
+  const service2Data = await getService2Data();
 
-  const htmlpage = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Juttu</title>
-    </head>
-    <body>
-    ${DataItem(service1Data, "Service 1")}
-    ${DataItem(service2Data, "Service 2")}
-    </body>
-    </html>
-  `;
-
-  response.send(htmlpage);
+  // HTML:
+  // const htmlpage = `
+  //   <!DOCTYPE html>
+  //   <html>
+  //   <head>
+  //     <title>Juttu</title>
+  //   </head>
+  //   <body>
+  //   ${DataItem(service1Data, "Service 1")}
+  //   ${DataItem(service2Data, "Service 2")}
+  //   </body>
+  //   </html>
+  // `;
+  // response.send(htmlpage);
+  // JSON:
+  response.json({ service1Data, service2Data });
 
   child_process.execSync("sleep 2");
 });
