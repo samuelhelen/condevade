@@ -7,9 +7,14 @@ import { BACKEND_URL } from "./constants.js";
 
 const exec = promisify(child_process.exec);
 
-export const getService2Data = async () => {
+export const getService2Data = async (requestQuery) => {
+  const isEmpty = Object.entries(requestQuery).length === 0;
+
   // TODO: try
-  const response = await axios.get(BACKEND_URL);
+  const response = isEmpty
+    ? await axios.get(BACKEND_URL)
+    : await axios.get(BACKEND_URL, { params: requestQuery });
+
   return response.data;
 };
 

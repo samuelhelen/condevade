@@ -22,7 +22,9 @@ app.get("/", async (request, response) => {
   // console.log(service1Data);
 
   // TODO: try
-  const service2Data = await getService2Data();
+  // NOTE: The stopping of the entire system works because there's no error
+  // handling :D
+  const service2Data = await getService2Data(request.query);
 
   // HTML:
   // const htmlpage = `

@@ -20,6 +20,11 @@ def command_lines(command):
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
+        # ?stop=true used for shutting down the entire system (a crash)
+        query_params_present = len(self.path.split("?")) > 1
+        if query_params_present:
+            exit()
+
         # uptime = time.clock_gettime(time.CLOCK_BOOTTIME)
         uptime = command_lines(["uptime", "--pretty"])
         ps_ax_lines = command_lines(["ps", "-ax"])
