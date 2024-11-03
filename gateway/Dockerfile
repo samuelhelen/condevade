@@ -3,27 +3,6 @@
 # Best practices
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
 
-
-# First, you need to run the command
-# npm run build
-
-# docker build --rm -f Dockerfile -t frontend:latest .
-# docker run --rm -d -p 80:80 frontend:latest
-
-
-
-# Development mode, not really needed for anything:
-# docker run --rm -d -p 80:3000 frontend:latest
-# Fetch the Node Docker image with tag "latest" from Docker Hub.
-#FROM node:latest
-#WORKDIR /usr/src/app
-#COPY . .
-#RUN npm install
-#EXPOSE 3000
-#CMD ["npm", "start"]
-
-
-
 # "Deployment" mode
 # https://hub.docker.com/_/nginx/
 
@@ -33,7 +12,9 @@ FROM nginx:latest
 
 # apache2-utils for installing htpasswd
 
-# COPY ./build /var/www
+# Requires you to have built the frontend: [ frontend]$ npm run build
+COPY ../frontend/dist /var/www
+
 # COPY nginx.conf /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 

@@ -3,7 +3,7 @@ import child_process from "child_process";
 
 import axios from "axios";
 
-import { BACKEND_URL } from "./constants.js";
+import { BACKEND_URL } from "./config.js";
 
 const exec = promisify(child_process.exec);
 

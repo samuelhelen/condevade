@@ -9,14 +9,14 @@ import DataItem from "./DataItem.js";
 
 import { getService1Data, getService2Data } from "./service.js";
 
-import { HOST, PORT } from "./constants.js";
+import { HOST, PORT } from "./config.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", async (request, response) => {
+app.get("/api", async (request, response) => {
   // TODO: try
   const service1Data = await getService1Data();
   // console.log(service1Data);

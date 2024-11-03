@@ -1,10 +1,6 @@
 import axios from "axios";
 
-// TODO: add some more path to the url both here and in the gateway.
-// extract the PORT.
-// TODO: switch this for the docker-compose setup:
-// const BASE_URL = "http://service1:8198/api";
-const BASE_URL = "http://localhost:8199";
+import { BASE_URL } from "./config.ts";
 
 // get_not_stop: if false, stop everything. else actually get
 export const getData = async (get_not_stop: boolean = true) => {
