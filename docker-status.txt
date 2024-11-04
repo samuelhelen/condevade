@@ -1,11 +1,16 @@
-[user@host condevade]$ docker container ls
-CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS         PORTS                    NAMES
-297eba226aba   rush/service1/v1   "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   0.0.0.0:8199->8199/tcp   service1
-cea01ba4bf10   rush/service2/v1   "python ./service2.py"   3 minutes ago   Up 3 minutes   8080/tcp                 service2
-[user@host condevade docker network ls
+$ docker container ls
+CONTAINER ID   IMAGE              COMMAND                  CREATED          STATUS          PORTS                            NAMES
+ba2d32f84a1a   rush/gateway/v1    "/docker-entrypoint.…"   49 seconds ago   Up 47 seconds   80/tcp, 0.0.0.0:8198->8198/tcp   nginx_gateway
+849b87cfb46b   rush/service1/v1   "docker-entrypoint.s…"   49 seconds ago   Up 48 seconds   8199/tcp                         condevade-service1-3
+a2d6db15e94c   rush/service1/v1   "docker-entrypoint.s…"   49 seconds ago   Up 47 seconds   8199/tcp                         condevade-service1-2
+f0157f2991e5   rush/service1/v1   "docker-entrypoint.s…"   49 seconds ago   Up 47 seconds   8199/tcp                         condevade-service1-1
+9ad22605f1ab   rush/service2/v1   "python ./service2.py"   49 seconds ago   Up 48 seconds   8080/tcp                         service2
+
+$ docker network ls
 NETWORK ID     NAME                  DRIVER    SCOPE
-0f407f248482   bridge                bridge    local
+dd95c09d7eba   bridge                bridge    local
 ba9bb05ed8e1   condevade_internal    bridge    local
+1c4bd515e3db   condevade_internal2   bridge    local
 a11efc8eaac3   host                  host      local
 6ba8e307df6b   none                  null      local
-[user@host condevade]$
+
