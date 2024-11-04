@@ -12,7 +12,7 @@ while true; do
 		systemctl halt --force
 	fi
 
-	sleep 5
+	sleep 12
 done
 
 
